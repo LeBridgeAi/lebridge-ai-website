@@ -1,0 +1,130 @@
+/* ----------------------------------------------------
+   LeBridge Agency + Gruau Collection Website Styles
+---------------------------------------------------- */
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  background: #ffffff;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  height: 50px;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  color: #222;
+}
+
+nav a:hover {
+  opacity: 0.6;
+}
+
+/* Banner */
+.banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Gruau Gallery Layout */
+.gallery {
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.gallery h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.gallery .intro {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.item {
+  text-decoration: none;
+  color: #222;
+  border: 1px solid #eee;
+  padding: 15px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.item h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-weight: bold;
+  color: #000;
+}
+
+/* Item Detail Page */
+.item-page {
+  padding: 60px 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.item-page img {
+  max-width: 100%;
+  border: 1px solid #eee;
+}
+
+.buy-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 14px 22px;
+  background: black;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.buy-button:hover {
+  opacity: 0.85;
+}
