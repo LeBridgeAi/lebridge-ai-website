@@ -138,6 +138,15 @@ header.nav .nav-left {
   color: #fff;
 }
 
+/* ==== GRUAU BANNER ==== */
+.gruau-banner img {
+  width: 100%;
+  max-height: 290px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
 /* =========================================
    HERO (HOME)
 ========================================= */
