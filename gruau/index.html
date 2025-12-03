@@ -3,41 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>René Gruau Collection – LeBridge Fine Art</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>René Gruau Collection — LeBridge AI</title>
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-<header class="header">
-  <img src="/assets/logo.png" class="logo" />
-  <nav>
-    <a href="/">Agency</a>
-    <a href="/gruau/">Gruau Collection</a>
-  </nav>
-</header>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <a href="../index.html">
+            <img
+              src="../assets/images/lebridge-logo-icon-white.png"
+              alt="LeBridge Logo"
+              class="logo"
+            />
+          </a>
+          <div class="site-name">LeBridge AI</div>
+        </div>
 
-<section class="banner">
-  <img src="/assets/gruau-banner.jpg" class="banner-img" />
-</section>
+        <nav class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="../pages/services.html">Services</a>
+          <a href="../pages/about.html">About</a>
+          <a href="../pages/contact.html">Contact</a>
+          <a href="index.html" class="active">Gruau Collection</a>
+        </nav>
 
-<section class="gallery">
-  <h2>René Gruau Original Works</h2>
-  <p class="intro">A curated selection of original sketches, inks, and studies from the private collection.</p>
+        <button id="themeToggle" class="theme-toggle">🌙</button>
+      </div>
+    </header>
 
-  <div class="grid">
-    <!-- Example items -->
-    <a class="item" href="item.html?id=1">
-      <img src="/assets/items/sample1.jpg" />
-      <h3>Original Mixed Media Fashion Illustration (36×50 cm)</h3>
-      <p class="price">$2,750</p>
-    </a>
+    <main class="container">
+      <h1>René Gruau Original Works</h1>
+      <p class="subtitle">
+        A curated selection of original sketches, inks, and studies from the
+        private collection.
+      </p>
 
-    <a class="item" href="item.html?id=2">
-      <img src="/assets/items/sample2.jpg" />
-      <h3>Atelier Study – Majestic Lady (Signed Pencil)</h3>
-      <p class="price">$1,198</p>
-    </a>
+      <section class="art-grid">
+        <!-- Profile of Elegance -->
+        <a href="profile-of-elegance.html" class="art-card">
+          <img
+            src="../assets/images/gruau/img1.png"
+            alt="Profile of Elegance artwork"
+            class="art-image"
+          />
+          <div class="art-info">
+            <h3>Atelier Study — Majestic Lady (Signed Pencil)</h3>
+            <p class="price">$1,198</p>
+          </div>
+        </a>
+
+        <!-- Black Swan -->
+        <a href="the-black-swan.html" class="art-card">
+          <img
+            src="../assets/images/gruau/img2.jpg"
+            alt="Black Swan mixed media illustration"
+            class="art-image"
+          />
+          <div class="art-info">
+            <h3>Original Mixed Media Fashion Illustration (36×50 cm)</h3>
+            <p class="price">$2,750</p>
+          </div>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 LeBridge AI — All rights reserved.
+    </footer>
   </div>
-</section>
 
+  <script src="../theme.js"></script>
 </body>
 </html>

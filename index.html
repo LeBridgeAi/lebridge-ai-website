@@ -1,57 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LeBridge AI — Automation & AI Ops</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="theme.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeBridge AI — Operations, Agents, Automations</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <img
+            src="assets/images/lebridge-logo-icon-white.png"
+            alt="LeBridge Logo"
+            class="logo"
+          />
+          <div class="site-name">LeBridge AI</div>
+        </div>
 
-<header class="nav">
-  <div class="nav-left">
-    <img src="assets/logo.svg" class="logo" alt="LeBridge Logo">
-    <a href="index.html">Home</a>
-    <a href="pages/services.html">Services</a>
-    <a href="pages/about.html">About</a>
-    <a href="pages/contact.html">Contact</a>
-    <a href="gruau/index.html">Gruau Collection</a>
+        <nav class="nav-links">
+          <a href="index.html" class="active">Home</a>
+          <a href="pages/services.html">Services</a>
+          <a href="pages/about.html">About</a>
+          <a href="pages/contact.html">Contact</a>
+          <a href="gruau/index.html">Gruau Collection</a>
+        </nav>
+
+        <button id="themeToggle" class="theme-toggle">🌙</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-kicker">AI Operations Studio</div>
+        <h1 class="hero-title">LeBridge AI</h1>
+        <p class="hero-subtitle">
+          AI Operations, agents, and automations built with clarity and
+          precision — from workflow design to production-ready systems.
+        </p>
+        <button class="btn-primary" onclick="location.href='pages/services.html'">
+          Explore Services
+        </button>
+      </section>
+
+      <section>
+        <div class="cards-grid">
+          <div class="card">
+            <h3>AI Automation</h3>
+            <p>
+              End-to-end automation for operations, workflows, and process
+              systems.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Voice &amp; Agent Systems</h3>
+            <p>
+              Custom voice agents and GPT-powered toolchains built for real ROI.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Operational Intelligence</h3>
+            <p>
+              Dashboards, data systems, and predictive intelligence workflows.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 LeBridge AI — All rights reserved.
+    </footer>
   </div>
 
-  <button class="theme-toggle" id="themeToggle">🌙</button>
-</header>
-
-
-<section class="hero">
-  <h1>LeBridge AI</h1>
-  <p>AI Operations, Agents, and Automations built with clarity and precision.</p>
-  <a href="pages/services.html" class="button">Explore Services</a>
-</section>
-
-
-<section class="features">
-  <div class="feature-card">
-    <h3>AI Automation</h3>
-    <p>End-to-end automation for operations, workflows, and process systems.</p>
-  </div>
-
-  <div class="feature-card">
-    <h3>Voice & Agent Systems</h3>
-    <p>Custom voice agents and GPT-powered toolchains built for real ROI.</p>
-  </div>
-
-  <div class="feature-card">
-    <h3>Operational Intelligence</h3>
-    <p>Dashboards, data systems, and predictive intelligence workflows.</p>
-  </div>
-</section>
-
-
-<footer class="footer">
-  © 2025 LeBridge AI — All rights reserved.
-</footer>
-
+  <script src="theme.js"></script>
 </body>
 </html>
