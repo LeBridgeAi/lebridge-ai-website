@@ -4,7 +4,7 @@ fetch("../data/gruau.json")
     const grid = document.getElementById("art-grid");
 
     grid.innerHTML = items.map(item => `
-      <a class="art-card" href="/gruau/${item.slug}.html">
+      <a class="art-card" href="${item.detailPage}">
         <img class="art-image" src="${item.image}" alt="${item.title}">
         <div class="art-info">
           <h3>${item.title}</h3>
