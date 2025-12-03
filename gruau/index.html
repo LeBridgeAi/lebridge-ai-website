@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>René Gruau Collection — LeBridge AI</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
   <header class="nav">
@@ -28,17 +28,28 @@
   </header>
 
   <div class="gruau-banner">
-    <img src="/assets/images/gruau/Gruau_Store_Billboard 1280x290.jpeg" alt="René Gruau Collection Banner">
+    <img src="../assets/images/gruau/banner.jpeg" alt="René Gruau Collection Banner">
+  </div>
+
+  <div class="gruau-cta">
+    <a href="#art-grid" class="gruau-shop-button">View Available Works</a>
   </div>
 
   <div class="container">
-    <h2>René Gruau Original Works</h2>
-    <p>A curated selection of original sketches, inks, and studies from the private collection.</p>
+    <h2 class="page-title">The Gruau Collection</h2>
+    <p class="page-subtitle">
+      Rare original works by René Gruau — curated, authenticated, and offered directly from the private collection.
+    </p>
+    <p class="shop-meta">
+      14 items sold · 100% positive reviews · Ships from Wellington, FL
+    </p>
 
-    <div id="art-grid" class="art-grid"></div>
+    <div class="gruau-grid-wrapper">
+      <div id="art-grid" class="art-grid"></div>
+    </div>
   </div>
 
-  <script src="/theme.js"></script>
-  <script src="/gruau/load-gruau.js"></script>
+  <script src="../theme.js"></script>
+  <script src="load-gruau.js"></script>
 </body>
 </html>
