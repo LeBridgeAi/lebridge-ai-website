@@ -22,6 +22,19 @@
       margin-top: 30px;
       display: inline-block;
     }
+    #summary {
+      margin-top: 40px;
+      text-align: left;
+      display: inline-block;
+      background: #111;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      min-width: 260px;
+    }
+    #summary h2 {
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -29,38 +42,80 @@
   <h1>Processing Your Checkout…</h1>
   <p>Please wait — or click below if not redirected.</p>
 
+  <div id="summary"></div>
+
   <a class="button" href="/">Back to Home</a>
 
   <script>
-    /* -----------------------------
-       CHECKOUT REDIRECT LOGIC
-    ------------------------------*/
+    /* ----------------------------------------
+       META-COMPATIBLE CHECKOUT URL PARSER
+       Supports:
+       ?products=123:1,456:2&coupon=TEST
+    ----------------------------------------*/
 
-    // Parse URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("product_id");
-    const coupon = urlParams.get("coupon");
+    const params = new URLSearchParams(window.location.search);
 
-    // If no product, fail gracefully
-    if (!productId) {
-      alert("Missing product ID.");
-      window.location.href = "/";
+    // Meta standard uses "products"
+    const productsParam = params.get("products") || "";
+    const coupon = params.get("coupon") || null;
+
+    let products = [];
+
+    if (productsParam) {
+      const entries = productsParam.split(",");
+      for (let entry of entries) {
+        const [id, qty] = entry.split(":");
+        const quantity = parseInt(qty);
+
+        if (id && !isNaN(quantity)) {
+          products.push({ id, quantity });
+        }
+      }
     }
 
-    // Base script for routing to PayPal (YOUR loader file)
-    const BASE_REDIRECT = "https://lebridge.ai/gruau/load-gruau.js";
+    // Show parsed data so Meta validation tool sees it
+    const summaryBox = document.getElementById("summary");
 
-    // Build redirect URL
-    let redirectURL = `${BASE_REDIRECT}?product_id=${productId}`;
+    summaryBox.innerHTML = `
+      <h2>Cart Summary</h2>
+      <p><strong>Products:</strong></p>
+      <ul>
+        ${products.map(p => `<li>Product ${p.id} — Qty: ${p.quantity}</li>`).join("")}
+      </ul>
+      <p><strong>Coupon:</strong> ${coupon ? coupon : "None"}</p>
+    `;
 
-    if (coupon) {
-      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    /* ----------------------------------------
+       REDIRECT TO EXISTING PAYPAL / GRUAU FLOW
+       We build a redirect compatible with your
+       existing load-gruau.js payment loader.
+    ----------------------------------------*/
+
+    function buildLegacyRedirectURL() {
+      // Old system only accepted product_id= and coupon=
+      // We map first product as "main" for now.
+      const mainProduct = products[0];
+
+      if (!mainProduct) {
+        alert("No valid products found.");
+        window.location.href = "/";
+        return;
+      }
+
+      let url = `https://lebridge.ai/gruau/load-gruau.js?product_id=${mainProduct.id}&qty=${mainProduct.quantity}`;
+
+      if (coupon) {
+        url += `&coupon=${encodeURIComponent(coupon)}`;
+      }
+
+      return url;
     }
 
-    // Auto-redirect after 1 second
+    // Delay so Meta can read the page
     setTimeout(() => {
-      window.location.href = redirectURL;
-    }, 1000);
+      const redirectURL = buildLegacyRedirectURL();
+      if (redirectURL) window.location.href = redirectURL;
+    }, 2000);
   </script>
 </body>
 </html>
