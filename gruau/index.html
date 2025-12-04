@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>René Gruau Collection — LeBridge AI</title>
-  <link rel="stylesheet" href="../styles.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>Processing Checkout…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      margin: 40px;
+      text-align: center;
+    }
+    .button {
+      padding: 12px 20px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 30px;
+      display: inline-block;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="nav">
-    <div class="nav-left">
-      <a href="/">
-        <img
-          src="/assets/images/lebridge-logo-icon-white.png"
-          alt="LeBridge Logo"
-          class="logo"
-        />
-      </a>
-      <nav class="nav-links">
-        <a href="../index.html">Home</a>
-        <a href="../pages/services.html">Services</a>
-        <a href="../pages/about.html">About</a>
-        <a href="../pages/contact.html">Contact</a>
-        <a href="index.html" class="active">Gruau Collection</a>
-      </nav>
-    </div>
-    <button id="themeToggle" class="theme-toggle">🌙</button>
-  </header>
+  <h1>Processing Your Checkout…</h1>
+  <p>Please wait — or click below if not redirected.</p>
 
-  <div class="gruau-banner">
-    <img src="../assets/images/gruau/banner.jpeg" alt="René Gruau Collection Banner">
-  </div>
+  <a class="button" href="/">Back to Home</a>
 
-  <div class="gruau-cta">
-    <a href="#art-grid" class="gruau-shop-button">View Available Works</a>
-  </div>
+  <script>
+    /* -----------------------------
+       CHECKOUT REDIRECT LOGIC
+    ------------------------------*/
 
-  <div class="container">
-    <h2 class="page-title">The Gruau Collection</h2>
-    <p class="page-subtitle">
-      Rare original works by René Gruau — curated, authenticated, and offered directly from the private collection.
-    </p>
-    <p class="shop-meta">
-      14 items sold · 100% positive reviews · Ships from Wellington, FL
-    </p>
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("product_id");
+    const coupon = urlParams.get("coupon");
 
-    <div class="gruau-grid-wrapper">
-      <div id="art-grid" class="art-grid"></div>
-    </div>
-  </div>
+    // If no product, fail gracefully
+    if (!productId) {
+      alert("Missing product ID.");
+      window.location.href = "/";
+    }
 
-  <script src="../theme.js"></script>
-  <script src="load-gruau.js"></script>
+    // Base script for routing to PayPal (YOUR loader file)
+    const BASE_REDIRECT = "https://lebridge.ai/gruau/load-gruau.js";
+
+    // Build redirect URL
+    let redirectURL = `${BASE_REDIRECT}?product_id=${productId}`;
+
+    if (coupon) {
+      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    }
+
+    // Auto-redirect after 1 second
+    setTimeout(() => {
+      window.location.href = redirectURL;
+    }, 1000);
+  </script>
 </body>
 </html>
