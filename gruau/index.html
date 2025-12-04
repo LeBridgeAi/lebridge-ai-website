@@ -22,19 +22,6 @@
       margin-top: 30px;
       display: inline-block;
     }
-    #summary {
-      margin-top: 40px;
-      text-align: left;
-      display: inline-block;
-      background: #111;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      min-width: 260px;
-    }
-    #summary h2 {
-      text-align: center;
-    }
   </style>
 </head>
 
@@ -42,80 +29,54 @@
   <h1>Processing Your Checkout…</h1>
   <p>Please wait — or click below if not redirected.</p>
 
-  <div id="summary"></div>
-
   <a class="button" href="/">Back to Home</a>
 
   <script>
-    /* ----------------------------------------
-       META-COMPATIBLE CHECKOUT URL PARSER
-       Supports:
-       ?products=123:1,456:2&coupon=TEST
-    ----------------------------------------*/
+    /* ----------------------------------------------------
+       META CHECKOUT PARAM PARSER — HANDLES MULTIPLE ITEMS
+    ----------------------------------------------------- */
 
     const params = new URLSearchParams(window.location.search);
 
-    // Meta standard uses "products"
-    const productsParam = params.get("products") || "";
+    // Meta sends "products=ID:qty,ID2:qty"
+    const productsParam = params.get("products");
     const coupon = params.get("coupon") || null;
 
-    let products = [];
-
-    if (productsParam) {
-      const entries = productsParam.split(",");
-      for (let entry of entries) {
-        const [id, qty] = entry.split(":");
-        const quantity = parseInt(qty);
-
-        if (id && !isNaN(quantity)) {
-          products.push({ id, quantity });
-        }
-      }
+    if (!productsParam) {
+      alert("No products were passed from Facebook Shop.");
+      window.location.href = "/";
     }
 
-    // Show parsed data so Meta validation tool sees it
-    const summaryBox = document.getElementById("summary");
+    // Parse product list
+    const productEntries = productsParam.split(",");
+    const productList = [];
 
-    summaryBox.innerHTML = `
-      <h2>Cart Summary</h2>
-      <p><strong>Products:</strong></p>
-      <ul>
-        ${products.map(p => `<li>Product ${p.id} — Qty: ${p.quantity}</li>`).join("")}
-      </ul>
-      <p><strong>Coupon:</strong> ${coupon ? coupon : "None"}</p>
-    `;
-
-    /* ----------------------------------------
-       REDIRECT TO EXISTING PAYPAL / GRUAU FLOW
-       We build a redirect compatible with your
-       existing load-gruau.js payment loader.
-    ----------------------------------------*/
-
-    function buildLegacyRedirectURL() {
-      // Old system only accepted product_id= and coupon=
-      // We map first product as "main" for now.
-      const mainProduct = products[0];
-
-      if (!mainProduct) {
-        alert("No valid products found.");
-        window.location.href = "/";
-        return;
+    productEntries.forEach(entry => {
+      const [id, qty] = entry.split(":");
+      if (id && qty) {
+        productList.push({ id, qty: parseInt(qty) });
       }
+    });
 
-      let url = `https://lebridge.ai/gruau/load-gruau.js?product_id=${mainProduct.id}&qty=${mainProduct.quantity}`;
-
-      if (coupon) {
-        url += `&coupon=${encodeURIComponent(coupon)}`;
-      }
-
-      return url;
+    if (productList.length === 0) {
+      alert("Could not read product IDs.");
+      window.location.href = "/";
     }
 
-    // Delay so Meta can read the page
+    // Convert to JSON and encode for redirect
+    const encodedProducts = encodeURIComponent(JSON.stringify(productList));
+
+    // Your redirect handler (loader)
+    let redirectURL = `https://lebridge.ai/gruau/load-gruau.js?items=${encodedProducts}`;
+
+    if (coupon) {
+      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    }
+
+    // Auto-redirect
     setTimeout(() => {
-      const redirectURL = buildLegacyRedirectURL();
-      if (redirectURL) window.location.href = redirectURL;
-    }, 2000);
+      window.location.href = redirectURL;
+    }, 800);
   </script>
 </body>
 </html>
