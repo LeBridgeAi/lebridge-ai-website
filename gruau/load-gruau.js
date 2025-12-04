@@ -1,16 +1,29 @@
-fetch("../data/gruau.json")
-  .then(response => response.json())
-  .then(items => {
-    const grid = document.getElementById("art-grid");
+// load-gruau.js
 
-    grid.innerHTML = items.map(item => `
-      <a class="art-card" href="${item.detailPage}">
-        <img class="art-image" src="${item.image}" alt="${item.title}">
-        <div class="art-info">
-          <h3>${item.title}</h3>
-          <div class="art-price">$${item.price}</div>
-        </div>
-      </a>
-    `).join("");
-  })
-  .catch(err => console.error("Failed to load Gruau items:", err));
+// Extract params
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get("product_id");
+const coupon = urlParams.get("coupon");
+
+// YOUR PRODUCT → PAYPAL LINK MAP
+const PAYPAL_LINKS = {
+  "123": "https://www.paypal.com/checkoutnow?token=EXAMPLE123",
+  "456": "https://www.paypal.com/checkoutnow?token=EXAMPLE456"
+};
+
+// Validate
+if (!productId || !PAYPAL_LINKS[productId]) {
+  alert("Invalid or missing product.");
+  window.location.href = "/gruau/checkout/return.html?status=error";
+}
+
+// Build PayPal URL
+let checkoutURL = PAYPAL_LINKS[productId];
+
+// If coupon exists → Append it for tracking
+if (coupon) {
+  checkoutURL += `&coupon=${encodeURIComponent(coupon)}`;
+}
+
+// Redirect directly to PayPal
+window.location.href = checkoutURL;
