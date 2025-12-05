@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checkout</title>
+  <title>Processing Checkout…</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { 
-      font-family: Arial; 
-      margin: 40px; 
-      background: #000; 
-      color: #fff; 
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      margin: 40px;
       text-align: center;
     }
-    a.button {
+    .button {
       padding: 12px 20px;
       background: #fff;
       color: #000;
@@ -24,15 +24,49 @@
     }
   </style>
 </head>
+
 <body>
   <h1>Processing Your Checkout…</h1>
   <p>Please wait — or click below if not redirected.</p>
-
-  <!-- Placeholder -->
   <a class="button" href="/">Back to Home</a>
 
   <script>
-    // Later: auto-redirect based on product ID & quantity
+    /* ----------------------------------------------------
+       META CHECKOUT PARAM PARSER — HANDLES MULTIPLE ITEMS
+    ----------------------------------------------------- */
+
+    const params = new URLSearchParams(window.location.search);
+
+    // Meta sends "products=ID:qty,ID2:qty"
+    const productsParam = params.get("products");
+    const coupon = params.get("coupon") || null;
+
+    if (!productsParam) {
+      console.warn("No Facebook Shop parameters. User likely navigated manually.");
+      window.location.href = "/gruau/";
+    }
+
+    const productEntries = productsParam.split(",");
+    const productList = [];
+
+    productEntries.forEach(entry => {
+      const [id, qty] = entry.split(":");
+      if (id && qty) {
+        productList.push({ id, qty: parseInt(qty) });
+      }
+    });
+
+    const encodedProducts = encodeURIComponent(JSON.stringify(productList));
+
+    let redirectURL = `/gruau/checkout/load-gruau.js?items=${encodedProducts}`;
+
+    if (coupon) {
+      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    }
+
+    setTimeout(() => {
+      window.location.href = redirectURL;
+    }, 800);
   </script>
 </body>
 </html>
