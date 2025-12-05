@@ -33,12 +33,12 @@
 
   <script>
     /* ----------------------------------------------------
-       META CHECKOUT PARAM PARSER — HANDLES MULTIPLE ITEMS
+       META CHECKOUT HANDLER — SINGLE PRODUCT REDIRECT
     ----------------------------------------------------- */
 
     const params = new URLSearchParams(window.location.search);
 
-    // Meta sends "products=ID:qty,ID2:qty"
+    // Meta sends: products=ID:qty,ID2:qty...
     const productsParam = params.get("products");
     const coupon = params.get("coupon") || null;
 
@@ -47,36 +47,37 @@
       window.location.href = "/";
     }
 
-    // Parse product list
-    const productEntries = productsParam.split(",");
-    const productList = [];
+    // Use FIRST item (Meta uses single-item checkout for approval)
+    const firstEntry = productsParam.split(",")[0] || "";
+    const [productId, qty] = firstEntry.split(":");
 
-    productEntries.forEach(entry => {
-      const [id, qty] = entry.split(":");
-      if (id && qty) {
-        productList.push({ id, qty: parseInt(qty) });
-      }
-    });
-
-    if (productList.length === 0) {
-      alert("Could not read product IDs.");
+    if (!productId) {
+      alert("Missing product ID.");
       window.location.href = "/";
     }
 
-    // Convert to JSON and encode for redirect
-    const encodedProducts = encodeURIComponent(JSON.stringify(productList));
+    // YOUR META → PAYPAL MAP (Content ID → PayPal Link)
+    const PAYPAL_LINKS = {
+      "t8mytpb1b0": "https://www.paypal.com/ncp/payment/VGEFJP87B6PLE",
+      "d5caaulmbr": "https://www.paypal.com/ncp/payment/3QKGCNFHDARQQ"
+    };
 
-    // Your redirect handler (loader)
-    let redirectURL = `https://lebridge.ai/gruau/load-gruau.js?items=${encodedProducts}`;
-
-    if (coupon) {
-      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    if (!PAYPAL_LINKS[productId]) {
+      alert("Unknown or unmapped product.");
+      window.location.href = "/gruau/returns/index.html?status=error";
     }
 
-    // Auto-redirect
-    setTimeout(() => {
-      window.location.href = redirectURL;
-    }, 800);
+    // Build PayPal redirect URL
+    let checkoutURL = PAYPAL_LINKS[productId];
+
+    // Optional tracking
+    if (coupon) {
+      const sep = checkoutURL.includes("?") ? "&" : "?";
+      checkoutURL += `${sep}coupon=${encodeURIComponent(coupon)}`;
+    }
+
+    // Redirect to PayPal
+    window.location.href = checkoutURL;
   </script>
 </body>
 </html>
