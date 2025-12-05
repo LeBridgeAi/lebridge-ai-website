@@ -28,6 +28,7 @@
 <body>
   <h1>Processing Your Checkout…</h1>
   <p>Please wait — or click below if not redirected.</p>
+
   <a class="button" href="/">Back to Home</a>
 
   <script>
@@ -42,10 +43,11 @@
     const coupon = params.get("coupon") || null;
 
     if (!productsParam) {
-      console.warn("No Facebook Shop parameters. User likely navigated manually.");
-      window.location.href = "/gruau/";
+      alert("No products were passed from Facebook Shop.");
+      window.location.href = "/";
     }
 
+    // Parse product list
     const productEntries = productsParam.split(",");
     const productList = [];
 
@@ -56,14 +58,22 @@
       }
     });
 
+    if (productList.length === 0) {
+      alert("Could not read product IDs.");
+      window.location.href = "/";
+    }
+
+    // Convert to JSON and encode for redirect
     const encodedProducts = encodeURIComponent(JSON.stringify(productList));
 
-    let redirectURL = `/gruau/checkout/load-gruau.js?items=${encodedProducts}`;
+    // Your redirect handler (loader)
+    let redirectURL = `https://lebridge.ai/gruau/load-gruau.js?items=${encodedProducts}`;
 
     if (coupon) {
       redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
     }
 
+    // Auto-redirect
     setTimeout(() => {
       window.location.href = redirectURL;
     }, 800);
