@@ -2,50 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>René Gruau Collection</title>
+  <title>Processing Checkout…</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      margin: 40px;
+      text-align: center;
+    }
+    .button {
+      padding: 12px 20px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 30px;
+      display: inline-block;
+    }
+  </style>
 </head>
 
 <body>
-  <header class="nav">
-    <div class="nav-left">
-      <a href="/">
-        <img src="/assets/images/lebridge-logo-icon-white.png" class="logo" />
-      </a>
-      <nav class="nav-links">
-        <a href="/">Home</a>
-        <a href="/pages/services.html">Services</a>
-        <a href="/pages/about.html">About</a>
-        <a href="/pages/contact.html">Contact</a>
-        <a href="/gruau/index.html">Gruau Collection</a>
-      </nav>
-    </div>
-  </header>
 
-  <div class="container" style="margin-top:40px;">
-    <h1>René Gruau — Original Works</h1>
-    <p>Select a piece below to view details.</p>
+  <h1>Processing Your Checkout…</h1>
+  <p>Please wait — or click below if not redirected.</p>
 
-    <div class="art-grid">
+  <a class="button" href="/">Back to Home</a>
 
-      <a href="/gruau/mixed-media-fashion.html" class="art-card">
-        <img src="/assets/images/gruau/mixed-media-fashion.jpg" />
-        <div class="art-title">Mixed Media Fashion Illustration</div>
-      </a>
+  <!-- ----------------------------------------------------
+       META CHECKOUT PARAM PARSER — HANDLES MULTIPLE ITEMS
+  ----------------------------------------------------- -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
 
-      <a href="/gruau/majestic-lady.html" class="art-card">
-        <img src="/assets/images/gruau/majestic-lady.jpg" />
-        <div class="art-title">Majestic Lady — Signed Ink</div>
-      </a>
+    // Meta sends: products=ID:qty,ID2:qty
+    const productsParam = params.get("products");
+    const coupon = params.get("coupon") || null;
 
-    </div>
-  </div>
+    if (!productsParam) {
+      alert("No products were passed from Facebook Shop.");
+      window.location.href = "/";
+    }
 
-  <footer style="margin-top:60px; padding:30px; text-align:center; color:#777;">
-    © 2025 LeBridge AI — All rights reserved.
-  </footer>
+    // Parse products list
+    const productEntries = productsParam.split(",");
+    const productList = [];
 
-  <script src="../theme.js"></script>
+    productEntries.forEach(entry => {
+      const [id, qty] = entry.split(":");
+      if (id && qty) {
+        productList.push({ id, qty: parseInt(qty) });
+      }
+    });
+
+    if (productList.length === 0) {
+      alert("Could not read product IDs.");
+      window.location.href = "/";
+    }
+
+    // ---- Extract first product ID (Meta only needs this for validation)
+    const firstProductId = productList[0].id;
+
+    // Build redirect → load-gruau.js
+    let redirectURL = `/gruau/load-gruau.js?product_id=${firstProductId}`;
+
+    if (coupon) {
+      redirectURL += `&coupon=${encodeURIComponent(coupon)}`;
+    }
+
+    // Redirect to PayPal resolver
+    window.location.href = redirectURL;
+  </script>
+
 </body>
 </html>
