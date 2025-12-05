@@ -2,33 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Return to Checkout</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Status — LeBridge</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
-      margin: 40px;
+      font-family: Arial, sans-serif;
       text-align: center;
+      padding: 40px;
     }
-    a.button {
-      padding: 12px 20px;
-      background: #fff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
+    .box {
+      background: #111;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+    }
+    a {
+      color: #4aa3ff;
       font-weight: bold;
-      margin-top: 30px;
-      display: inline-block;
     }
   </style>
 </head>
 <body>
-  <h1>We're Sorry — Something Went Wrong</h1>
-  <p>This is a legacy return page that Meta used before your checkout was set up correctly.<br>
-     You can safely return to the shop.</p>
 
-  <a class="button" href="/">Back to Home</a>
+  <div class="box">
+    <h1>Thank You</h1>
+    <p>Your order is being processed.</p>
+
+    <h3>Order Details</h3>
+    <div id="orderData" style="opacity: .8; font-size: 14px; margin-top: 20px;">
+      Reading order information…
+    </div>
+
+    <p style="margin-top: 30px;">
+      <a href="/">Return to Home</a>
+    </p>
+  </div>
+
+  <script>
+    // Read the ?products= param from Meta
+    const params = new URLSearchParams(window.location.search);
+    const rawProducts = params.get("products");
+
+    if (rawProducts) {
+      document.getElementById("orderData").innerHTML =
+        "<b>Products returned from Meta:</b><br>" + rawProducts;
+    } else {
+      document.getElementById("orderData").innerHTML =
+        "No product details were returned.";
+    }
+  </script>
+
 </body>
 </html>
