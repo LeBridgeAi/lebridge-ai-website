@@ -75,7 +75,8 @@
     // 1. NO PRODUCTS PASSED
     //    Meta's test often hits this state. We keep a
     //    stable "cart" layout visible so it still
-    //    counts as a checkout page.
+    //    counts as a checkout page, but we DO NOT
+    //    throw any errors.
     // --------------------------------------------------
     if (!productsParam) {
       cartItems.innerHTML = `
@@ -83,72 +84,72 @@
         <p>This page is only used when checking out from our Facebook or Instagram Shop.</p>
       `;
       actions.innerHTML = `
-        <a class="button" href="https://www.facebook.com">Return to Shop</a>
+        <a class="button" href="/">Return to LeBridge AI</a>
       `;
-      // Do NOT redirect automatically here.
-      // Meta needs to see the page structure.
       console.warn("No products passed — showing empty checkout state.");
-      throw new Error("No products passed.");
-    }
+      // IMPORTANT: no 'throw new Error' here
+    } else {
+      // --------------------------------------------------
+      // 2. Parse first product from Meta param
+      // --------------------------------------------------
+      const firstEntry = productsParam.split(",")[0] || "";
+      const [productId, qtyRaw] = firstEntry.split(":");
+      const qty = qtyRaw || 1;
 
-    // --------------------------------------------------
-    // 2. Parse first product from Meta param
-    // --------------------------------------------------
-    const firstEntry = productsParam.split(",")[0] || "";
-    const [productId, qtyRaw] = firstEntry.split(":");
-    const qty = qtyRaw || 1;
+      if (!productId) {
+        cartItems.innerHTML = `
+          <p>We couldn't process the product information for this order.</p>
+        `;
+        actions.innerHTML = `
+          <a class="button" href="/">Return to LeBridge AI</a>
+        `;
+        console.warn("Missing product ID.");
+        return;
+      }
 
-    if (!productId) {
+      if (!PAYPAL_LINKS[productId]) {
+        cartItems.innerHTML = `
+          <p>This artwork is no longer available or cannot be purchased online.</p>
+        `;
+        actions.innerHTML = `
+          <a class="button" href="/">Return to LeBridge AI</a>
+        `;
+        console.warn("Unknown product ID:", productId);
+        return;
+      }
+
+      // --------------------------------------------------
+      // 3. Show visible cart item for Meta + buyer
+      // --------------------------------------------------
       cartItems.innerHTML = `
-        <p>We couldn't process the product information for this order.</p>
+        <div class="checkout-item">
+          <strong>Artwork ID:</strong> ${productId}<br>
+          <strong>Quantity:</strong> ${qty}
+        </div>
+        <p class="muted">
+          When you continue, you'll be redirected to our secure PayPal checkout
+          to complete your purchase.
+        </p>
       `;
+
+      // --------------------------------------------------
+      // 4. Build PayPal redirect URL
+      // --------------------------------------------------
+      let checkoutURL = PAYPAL_LINKS[productId];
+
+      if (coupon) {
+        const sep = checkoutURL.includes("?") ? "&" : "?";
+        checkoutURL += sep + "coupon=" + encodeURIComponent(coupon);
+      }
+
       actions.innerHTML = `
-        <a class="button" href="/">Return to LeBridge AI</a>
+        <button id="payNow" class="button">Proceed to Secure Payment</button>
       `;
-      throw new Error("Missing product ID.");
+
+      document.getElementById("payNow").addEventListener("click", () => {
+        window.location.href = checkoutURL;
+      });
     }
-
-    if (!PAYPAL_LINKS[productId]) {
-      cartItems.innerHTML = `
-        <p>This artwork is no longer available or cannot be purchased online.</p>
-      `;
-      actions.innerHTML = `
-        <a class="button" href="/">Return to LeBridge AI</a>
-      `;
-      throw new Error("Unknown product ID.");
-    }
-
-    // --------------------------------------------------
-    // 3. Show visible cart item for Meta + buyer
-    // --------------------------------------------------
-    cartItems.innerHTML = `
-      <div class="checkout-item">
-        <strong>Artwork ID:</strong> ${productId}<br>
-        <strong>Quantity:</strong> ${qty}
-      </div>
-      <p class="muted">
-        When you continue, you'll be redirected to our secure PayPal checkout
-        to complete your purchase.
-      </p>
-    `;
-
-    // --------------------------------------------------
-    // 4. Build PayPal redirect URL
-    // --------------------------------------------------
-    let checkoutURL = PAYPAL_LINKS[productId];
-
-    if (coupon) {
-      const sep = checkoutURL.includes("?") ? "&" : "?";
-      checkoutURL += sep + "coupon=" + encodeURIComponent(coupon);
-    }
-
-    actions.innerHTML = `
-      <button id="payNow" class="button">Proceed to Secure Payment</button>
-    `;
-
-    document.getElementById("payNow").addEventListener("click", () => {
-      window.location.href = checkoutURL;
-    });
   </script>
 
 </body>
