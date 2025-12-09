@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting…</title>
+</head>
+<body style="background:black;color:white;text-align:center;padding:40px;">
+  <h2>Redirecting to Secure Checkout…</h2>
+
+<script>
+
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("product_id");
+  const coupon = params.get("coupon") || "";
+
+  if (!productId) {
+    alert("Invalid product.");
+    window.location.href = "/gruau/checkout/return.html?status=error";
+  }
+
+  // YOUR REAL PAYPAL LINKS
+  const PAYPAL = {
+    "t8mytpb1b0": "https://www.paypal.com/ncp/payment/VGEFJP87B6PLE",
+    "d5caaulmbr": "https://www.paypal.com/ncp/payment/3QKGNCFHDARQQ"
+  };
+
+  if (!PAYPAL[productId]) {
+    alert("Product not found.");
+    window.location.href = "/gruau/checkout/return.html?status=error";
+  }
+
+  let redirect = PAYPAL[productId];
+
+  if (coupon) {
+    redirect += `&coupon=${coupon}`;
+  }
+
+  window.location.href = redirect;
+
+</script>
+</body>
+</html>
