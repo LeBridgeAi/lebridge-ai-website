@@ -2,18 +2,25 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
 
+  // Auto-detect GitHub Pages base path
+  const BASE = window.location.pathname.replace(/\/gruau\/checkout\/index\.html$/, "");
+
+  function go(path) {
+    window.location.assign(BASE + path);
+  }
+
   // Meta sends: products=ID:qty,ID2:qty
   const productsParam = params.get("products");
   if (!productsParam) {
-    window.location.href = "/returns/index.html?status=missing_products";
+    go("/returns/index.html?status=missing_products");
     return;
   }
 
-  // Take first product ID before the colon
+  // Take first product ID
   const firstEntry = productsParam.split(",")[0];
   const productId = firstEntry.split(":")[0];
 
-  // Map Meta product ID -> PayPal payment link
+  // Map Meta product ID -> PayPal link
   const PAYPAL_LINKS = {
     "t8mytpb1b0": "https://www.paypal.com/ncp/payment/T7HZ6YLJ8J7QL"
   };
@@ -21,11 +28,11 @@
   const paypalUrl = PAYPAL_LINKS[productId];
 
   if (!paypalUrl) {
-    window.location.href = "/returns/index.html?status=unknown_product";
+    go("/returns/index.html?status=unknown_product");
     return;
   }
 
-  // Direct redirect, no extra query params
-  window.location.href = paypalUrl;
+  // 🎯 FINAL REDIRECT
+  window.location.assign(paypalUrl);
 })();
 </script>
