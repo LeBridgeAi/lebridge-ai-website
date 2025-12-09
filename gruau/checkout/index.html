@@ -1,156 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Checkout – LeBridge Fine Art</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      margin: 40px auto;
-      max-width: 900px;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    h1 {
-      font-size: 26px;
-    }
-    .box {
-      background: #111;
-      padding: 25px;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-    .checkout-item {
-      padding: 12px;
-      border-bottom: 1px solid #333;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 12px 20px;
-      background: #4aa3ff;
-      color: #000;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .muted {
-      opacity: 0.8;
-      font-size: 14px;
-    }
-  </style>
-</head>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const products = params.get("products");
+  const coupon = params.get("coupon") || "";
 
-<body>
+  if (!products) {
+    alert("No product received.");
+    window.location.href = "/gruau/checkout/return.html?status=error";
+  }
 
-  <h1>Checkout</h1>
+  // Meta format: productId:qty
+  const [productId, qty] = products.split(":");
 
-  <div class="box">
-    <h3>Your Selected Artwork</h3>
-    <div id="cartItems" class="muted">Loading…</div>
-    <div id="actions"></div>
-  </div>
+  if (!productId) {
+    alert("Could not read product ID.");
+    window.location.href = "/gruau/checkout/return.html?status=error";
+  }
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
+  // Build redirect to resolver page
+  let url = `/gruau/checkout/resolve.html?product_id=${productId}`;
 
-    // Meta sends: products=ID:qty,ID2:qty...
-    const productsParam = params.get("products");
-    const coupon = params.get("coupon") || null;
+  if (coupon) {
+    url += `&coupon=${encodeURIComponent(coupon)}`;
+  }
 
-    const cartItems = document.getElementById("cartItems");
-    const actions = document.getElementById("actions");
-
-    // META → PAYPAL product mapping
-    const PAYPAL_LINKS = {
-      "t8mytpb1b0": "https://www.paypal.com/ncp/payment/VGEFJP87B6PLE",
-      "d5caaulmbr": "https://www.paypal.com/ncp/payment/3QKGCNFHDARQQ"
-    };
-
-    // --------------------------------------------------
-    // 1. NO PRODUCTS PASSED
-    //    Meta's test often hits this state. We keep a
-    //    stable "cart" layout visible so it still
-    //    counts as a checkout page, but we DO NOT
-    //    throw any errors.
-    // --------------------------------------------------
-    if (!productsParam) {
-      cartItems.innerHTML = `
-        <p>No product was passed from the shop system.</p>
-        <p>This page is only used when checking out from our Facebook or Instagram Shop.</p>
-      `;
-      actions.innerHTML = `
-        <a class="button" href="/">Return to LeBridge AI</a>
-      `;
-      console.warn("No products passed — showing empty checkout state.");
-      // IMPORTANT: no 'throw new Error' here
-    } else {
-      // --------------------------------------------------
-      // 2. Parse first product from Meta param
-      // --------------------------------------------------
-      const firstEntry = productsParam.split(",")[0] || "";
-      const [productId, qtyRaw] = firstEntry.split(":");
-      const qty = qtyRaw || 1;
-
-      if (!productId) {
-        cartItems.innerHTML = `
-          <p>We couldn't process the product information for this order.</p>
-        `;
-        actions.innerHTML = `
-          <a class="button" href="/">Return to LeBridge AI</a>
-        `;
-        console.warn("Missing product ID.");
-        return;
-      }
-
-      if (!PAYPAL_LINKS[productId]) {
-        cartItems.innerHTML = `
-          <p>This artwork is no longer available or cannot be purchased online.</p>
-        `;
-        actions.innerHTML = `
-          <a class="button" href="/">Return to LeBridge AI</a>
-        `;
-        console.warn("Unknown product ID:", productId);
-        return;
-      }
-
-      // --------------------------------------------------
-      // 3. Show visible cart item for Meta + buyer
-      // --------------------------------------------------
-      cartItems.innerHTML = `
-        <div class="checkout-item">
-          <strong>Artwork ID:</strong> ${productId}<br>
-          <strong>Quantity:</strong> ${qty}
-        </div>
-        <p class="muted">
-          When you continue, you'll be redirected to our secure PayPal checkout
-          to complete your purchase.
-        </p>
-      `;
-
-      // --------------------------------------------------
-      // 4. Build PayPal redirect URL
-      // --------------------------------------------------
-      let checkoutURL = PAYPAL_LINKS[productId];
-
-      if (coupon) {
-        const sep = checkoutURL.includes("?") ? "&" : "?";
-        checkoutURL += sep + "coupon=" + encodeURIComponent(coupon);
-      }
-
-      actions.innerHTML = `
-        <button id="payNow" class="button">Proceed to Secure Payment</button>
-      `;
-
-      document.getElementById("payNow").addEventListener("click", () => {
-        window.location.href = checkoutURL;
-      });
-    }
-  </script>
-
-</body>
-</html>
+  window.location.href = url;
+</script>
