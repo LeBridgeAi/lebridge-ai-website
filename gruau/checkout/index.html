@@ -1,42 +1,31 @@
 <script>
-  (function () {
-    // Read URL params from Meta
-    const params = new URLSearchParams(window.location.search);
-    const productsParam = params.get("products");
-    const coupon = params.get("coupon") || null;
+(function () {
+  const params = new URLSearchParams(window.location.search);
 
-    if (!productsParam) {
-      alert("No product was passed from Facebook Shop.");
-      window.location.href = "/returns/index.html?status=error";
-      return;
-    }
+  // Meta sends: products=ID:qty,ID2:qty
+  const productsParam = params.get("products");
+  if (!productsParam) {
+    window.location.href = "/returns/index.html?status=missing_products";
+    return;
+  }
 
-    // Example: "t8mytpb1b0:1" or "t8mytpb1b0:1,d5caaulmbr:1"
-    const firstEntry = productsParam.split(",")[0];
-    const productId = firstEntry.split(":")[0];
+  // Take first product ID before the colon
+  const firstEntry = productsParam.split(",")[0];
+  const productId = firstEntry.split(":")[0];
 
-    // Map Meta product IDs → PayPal payment links
-    const PAYPAL_LINKS = {
-      t8mytpb1b0: "https://www.paypal.com/ncp/payment/VGEFJPB7B6PLE", // Yellow ink
-      d5caaulmbr: "https://www.paypal.com/ncp/payment/3QKGCNFHDARQQ"  // Black Swan
-    };
+  // Map Meta product ID -> PayPal payment link
+  const PAYPAL_LINKS = {
+    "t8mytpb1b0": "https://www.paypal.com/ncp/payment/T7HZ6YLJ8J7QL"
+  };
 
-    const baseUrl = PAYPAL_LINKS[productId];
+  const paypalUrl = PAYPAL_LINKS[productId];
 
-    if (!baseUrl) {
-      alert("Unknown or unmapped product ID: " + productId);
-      window.location.href = "/returns/index.html?status=unknown_product";
-      return;
-    }
+  if (!paypalUrl) {
+    window.location.href = "/returns/index.html?status=unknown_product";
+    return;
+  }
 
-    // Build final PayPal URL (optionally add coupon for tracking)
-    let checkoutURL = baseUrl;
-    if (coupon) {
-      checkoutURL += (checkoutURL.includes("?") ? "&" : "?") +
-        "coupon=" + encodeURIComponent(coupon);
-    }
-
-    // Redirect to PayPal
-    window.location.href = checkoutURL;
-  })();
+  // Direct redirect, no extra query params
+  window.location.href = paypalUrl;
+})();
 </script>
