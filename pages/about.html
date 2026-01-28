@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — LeBridge AI</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .about-hero {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .about-hero h1 {
+      font-size: clamp(40px, 6vw, 56px);
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .about-hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 720px;
+      line-height: 1.7;
+    }
+
+    .about-section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .about-section h2 {
+      font-size: clamp(32px, 5vw, 40px);
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+
+    .about-section p {
+      font-size: 16px;
+      max-width: 720px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px;
+      margin-top: 36px;
+    }
+
+    .value-item {
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .value-item h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .value-item p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .team-section {
+      padding: 48px 0;
+    }
+
+    .team-section h2 {
+      font-size: clamp(32px, 5vw, 40px);
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 36px;
+      margin-top: 36px;
+    }
+
+    .team-member {
+      text-align: center;
+    }
+
+    .team-member h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .team-member p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .cta-section {
+      padding: 64px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .cta-section h2 {
+      margin-bottom: 24px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-section p {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 1024px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-hero {
+        padding: 48px 0 32px;
+      }
+
+      .about-section {
+        padding: 32px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <img
+            src="../assets/images/lebridge-logo-icon-white.png"
+            alt="LeBridge Logo"
+            class="logo"
+          />
+          <div class="site-name">LeBridge AI</div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#approach">Methodology</a>
+          <a href="about.html" class="active">About</a>
+          <a href="mailto:hello@lebridge.ai">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="about-hero">
+        <h1>Who We Are</h1>
+        <p>
+          We're operational architects. We design and build AI systems that actually scale with your business. Not as a service vendor. As a partner who understands that systems thinking is the difference between AI that transforms and AI that fails.
+        </p>
+      </div>
+
+      <section class="about-section">
+        <h2>Our Philosophy</h2>
+        <p>
+          Most organizations approach AI as a tool problem: "Which model? Which platform? Which features?" This approach leads to scattered tools, duplicated work, and teams that can't collaborate. We approach AI as a systems problem.
+        </p>
+        <p>
+          Architecture first. Execution second. You own both.
+        </p>
+        <p>
+          We've built operational systems for organizations across industries. We understand the gap between what vendors promise and what actually works. We design for that gap. Your team, your data, your operations—every decision traces back to your specific context, not our playbook.
+        </p>
+      </section>
+
+      <section class="about-section">
+        <h2>How We Work</h2>
+        <div class="values-grid">
+          <div class="value-item">
+            <h3>Deep Diagnosis</h3>
+            <p>We spend time understanding your operations, constraints, and opportunities. This isn't a sales process. It's research.</p>
+          </div>
+          <div class="value-item">
+            <h3>Architectural Clarity</h3>
+            <p>We design systems you can understand and defend. Every integration, every decision, every handoff is documented and justified.</p>
+          </div>
+          <div class="value-item">
+            <h3>Deliberate Execution</h3>
+            <p>We don't just hand off code. We build alongside your team, transfer ownership, and leave you with systems you can maintain and scale.</p>
+          </div>
+          <div class="value-item">
+            <h3>Systems Thinking</h3>
+            <p>We optimize for your entire operation, not individual tools. This means hard decisions about what not to build as much as what to build.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <h2>Why LeBridge Exists</h2>
+        <p>
+          Organizations get AI architecture wrong because they treat it like a buying decision. They think about budget, features, and vendors. But AI systems are operations decisions. They need the same rigor you'd apply to your supply chain, your financial systems, or your product roadmap.
+        </p>
+        <p>
+          LeBridge exists because operational leaders deserve architects, not salespeople. We believe in building systems that scale, that your team owns, and that actually move your business forward.
+        </p>
+      </section>
+
+      <section class="cta-section">
+        <h2>Ready to talk about your operations?</h2>
+        <p>Let's understand your context and design the system that works for you.</p>
+        <a href="intake.html" class="btn-primary">Schedule a working session</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>LeBridge</h4>
+          <p>Operational systems for AI-driven organizations.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="../index.html#approach">Methodology</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://arkitek.lebridge.ai" target="_blank" rel="noopener">Arkitek Studio</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@lebridge.ai">hello@lebridge.ai</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LeBridge AI. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../theme.js"></script>
+</body>
+</html>

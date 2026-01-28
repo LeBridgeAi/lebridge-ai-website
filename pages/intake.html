@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule a Working Session — LeBridge AI</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .intake-container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .intake-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .intake-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .intake-header p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .intake-form {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 48px;
+    }
+
+    .form-group {
+      margin-bottom: 32px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .form-actions button {
+      flex: 1;
+    }
+
+    .form-note {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+
+    .success-message {
+      display: none;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 32px;
+      color: #10b981;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .intake-container {
+        padding: 48px 24px;
+      }
+
+      .intake-form {
+        padding: 32px;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .form-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <img
+            src="../assets/images/lebridge-logo-icon-white.png"
+            alt="LeBridge Logo"
+            class="logo"
+          />
+          <div class="site-name">LeBridge AI</div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#approach">Methodology</a>
+          <a href="about.html">About</a>
+          <a href="mailto:hello@lebridge.ai">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="intake-container">
+        <div class="intake-header">
+          <h1>Schedule a Working Session</h1>
+          <p>Tell us about your operations and what you're trying to accomplish. We'll design a system that moves you forward.</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+          <strong>Thank you!</strong> We've received your submission. We'll be in touch within 24 hours to schedule your session.
+        </div>
+
+        <form class="intake-form" id="intakeForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="your@company.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company *</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              required
+              placeholder="Your organization"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="role">Your Role *</label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              required
+              placeholder="e.g., Chief Operating Officer, Head of Operations"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="context">Business Context</label>
+            <textarea
+              id="context"
+              name="context"
+              placeholder="Describe your current operations, key challenges, and what you're trying to achieve with AI systems."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="focus">Primary Focus *</label>
+            <select id="focus" name="focus" required>
+              <option value="">Select a focus area</option>
+              <option value="automation">Process Automation</option>
+              <option value="integration">System Integration</option>
+              <option value="architecture">Architecture Design</option>
+              <option value="scaling">Scaling Operations</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="timeline">Timeline *</label>
+            <select id="timeline" name="timeline" required>
+              <option value="">Select timeline</option>
+              <option value="immediate">Immediate (This month)</option>
+              <option value="soon">Soon (Next 1-2 months)</option>
+              <option value="planning">Planning phase (3+ months)</option>
+              <option value="exploring">Just exploring</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Schedule Session</button>
+            <a href="../index.html" class="btn-secondary" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">Back</a>
+          </div>
+
+          <div class="form-note">
+            <strong>What happens next:</strong> We'll review your information and reach out within 24 hours to schedule a 30-minute working session. This is a conversation to understand your operations and determine if we're a good fit.
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>LeBridge</h4>
+          <p>Operational systems for AI-driven organizations.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="../index.html#approach">Methodology</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://arkitek.lebridge.ai" target="_blank" rel="noopener">Arkitek Studio</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@lebridge.ai">hello@lebridge.ai</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LeBridge AI. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      // Collect form data
+      const formData = new FormData(document.getElementById('intakeForm'));
+      const data = Object.fromEntries(formData);
+
+      // Send to email via a simple service
+      // For production, you'd want to use a backend service or form service like Formspree
+      const mailtoLink = `mailto:hello@lebridge.ai?subject=Working Session Request: ${encodeURIComponent(data.name)}&body=${encodeURIComponent(
+        `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company}\nRole: ${data.role}\nContext: ${data.context}\nFocus: ${data.focus}\nTimeline: ${data.timeline}`
+      )}`;
+
+      // Show success message
+      document.getElementById('successMessage').classList.add('show');
+      document.getElementById('intakeForm').reset();
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        document.getElementById('successMessage').classList.remove('show');
+      }, 5000);
+
+      // Optionally open email client
+      // window.location.href = mailtoLink;
+    }
+  </script>
+</body>
+</html>
