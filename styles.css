@@ -429,43 +429,43 @@ header.nav .nav-left {
 }
 
 .timeline-stage {
-  padding: 32px;
+  padding: 24px;
   background-color: rgba(255, 255, 255, 0.02);
   border-left: 2px solid var(--color-blue);
   border-radius: 8px;
 }
 
 .stage-number {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
   color: var(--color-blue);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .timeline-stage h3 {
-  font-size: 20px;
-  margin-bottom: 8px;
+  font-size: 18px;
+  margin-bottom: 6px;
   color: var(--text-primary);
 }
 
 .stage-duration {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--color-amber);
   font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .stage-items {
   list-style: none;
-  margin: 24px 0;
+  margin: 16px 0;
   padding: 0;
 }
 
 .stage-items li {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
-  padding: 8px 0 8px 24px;
+  padding: 4px 0 4px 20px;
   position: relative;
 }
 
@@ -477,10 +477,10 @@ header.nav .nav-left {
 }
 
 .stage-output {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
-  margin-top: 24px;
-  padding-top: 24px;
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid var(--border-subtle);
   margin-bottom: 0;
 }

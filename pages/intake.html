@@ -32,6 +32,7 @@
     .intake-form {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border-subtle);
+      border-left: 3px solid #10b981;
       border-radius: 12px;
       padding: 48px;
     }
@@ -74,8 +75,8 @@
     .form-group select:focus {
       outline: none;
       background: rgba(255, 255, 255, 0.04);
-      border-color: var(--color-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
     }
 
     .form-group input::placeholder,
@@ -173,7 +174,7 @@
           <strong>Thank you!</strong> We've received your submission. We'll be in touch within 24 hours to schedule your session.
         </div>
 
-        <form class="intake-form" id="intakeForm" onsubmit="handleFormSubmit(event)">
+        <form class="intake-form" id="intakeForm" action="https://formspree.io/f/xvgojzel" method="POST">
           <div class="form-group">
             <label for="name">Full Name *</label>
             <input
@@ -291,31 +292,8 @@
   </div>
 
   <script>
-    function handleFormSubmit(event) {
-      event.preventDefault();
-
-      // Collect form data
-      const formData = new FormData(document.getElementById('intakeForm'));
-      const data = Object.fromEntries(formData);
-
-      // Send to email via a simple service
-      // For production, you'd want to use a backend service or form service like Formspree
-      const mailtoLink = `mailto:hello@lebridge.ai?subject=Working Session Request: ${encodeURIComponent(data.name)}&body=${encodeURIComponent(
-        `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company}\nRole: ${data.role}\nContext: ${data.context}\nFocus: ${data.focus}\nTimeline: ${data.timeline}`
-      )}`;
-
-      // Show success message
-      document.getElementById('successMessage').classList.add('show');
-      document.getElementById('intakeForm').reset();
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        document.getElementById('successMessage').classList.remove('show');
-      }, 5000);
-
-      // Optionally open email client
-      // window.location.href = mailtoLink;
-    }
+    // Formspree handles form submission automatically
+    // Form action is set to Formspree endpoint
   </script>
 </body>
 </html>
