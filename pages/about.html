@@ -11,6 +11,17 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
+    .about-hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-hero-text {
+      max-width: 600px;
+    }
+
     .about-hero h1 {
       font-size: clamp(40px, 6vw, 56px);
       margin-bottom: 24px;
@@ -20,8 +31,14 @@
     .about-hero p {
       font-size: 18px;
       color: var(--text-secondary);
-      max-width: 720px;
       line-height: 1.7;
+    }
+
+    .about-hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
     }
 
     .about-section {
@@ -133,6 +150,15 @@
         padding: 48px 0 32px;
       }
 
+      .about-hero-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .about-hero-visual {
+        min-height: 250px;
+      }
+
       .about-section {
         padding: 32px 0;
       }
@@ -142,31 +168,60 @@
 <body>
   <div class="page">
     <header class="nav">
-      <div class="nav-inner">
-        <div class="nav-left">
-          <img
-            src="../assets/images/lebridge-logo-icon-white.png"
-            alt="LeBridge Logo"
-            class="logo"
-          />
-          <div class="site-name">LeBridge AI</div>
-        </div>
-
-        <nav class="nav-links">
-          <a href="../index.html">Home</a>
-          <a href="../index.html#approach">Methodology</a>
-          <a href="about.html" class="active">About</a>
-          <a href="mailto:hello@lebridge.ai">Contact</a>
-        </nav>
+      <div class="nav-left">
+        <img
+          src="../assets/images/lebridge-logo-icon-white.png"
+          alt="LeBridge Logo"
+          class="logo"
+        />
+        <div class="site-name">LeBridge AI</div>
       </div>
+
+      <nav class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#approach">Methodology</a>
+        <a href="about.html" class="active">About</a>
+        <a href="mailto:hello@lebridge.ai">Contact</a>
+      </nav>
     </header>
 
     <main class="container">
       <div class="about-hero">
-        <h1>Who We Are</h1>
-        <p>
-          We're operational architects. We design and build AI systems that actually scale with your business. Not as a service vendor. As a partner who understands that systems thinking is the difference between AI that transforms and AI that fails.
-        </p>
+        <div class="about-hero-content">
+          <div class="about-hero-text">
+            <h1>Who We Are</h1>
+            <p>
+              We're operational architects. We design and build AI systems that actually scale with your business. Not as a service vendor. As a partner who understands that systems thinking is the difference between AI that transforms and AI that fails.
+            </p>
+          </div>
+          <div class="about-hero-visual">
+            <svg width="100%" height="100%" viewBox="0 0 300 300" style="min-height: 200px;">
+              <defs>
+                <linearGradient id="grad-about" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.4" />
+                  <stop offset="100%" style="stop-color:#34d399;stop-opacity:0.1" />
+                </linearGradient>
+              </defs>
+              <!-- Central node -->
+              <circle cx="150" cy="150" r="50" fill="none" stroke="#10b981" stroke-width="2.5"/>
+              <text x="150" y="155" text-anchor="middle" fill="#10b981" font-size="14" font-weight="700">SYSTEMS</text>
+              <!-- Connecting lines to outer nodes -->
+              <line x1="150" y1="100" x2="150" y2="50" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+              <line x1="150" y1="200" x2="150" y2="250" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+              <line x1="100" y1="150" x2="50" y2="150" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+              <line x1="200" y1="150" x2="250" y2="150" stroke="#10b981" stroke-width="2" stroke-dasharray="4"/>
+              <!-- Outer nodes -->
+              <circle cx="150" cy="50" r="20" fill="none" stroke="#10b981" stroke-width="1.5"/>
+              <text x="150" y="55" text-anchor="middle" fill="#10b981" font-size="10" font-weight="600">Design</text>
+              <circle cx="150" cy="250" r="20" fill="none" stroke="#10b981" stroke-width="1.5"/>
+              <text x="150" y="255" text-anchor="middle" fill="#10b981" font-size="10" font-weight="600">Execute</text>
+              <circle cx="50" cy="150" r="20" fill="none" stroke="#10b981" stroke-width="1.5"/>
+              <text x="50" y="155" text-anchor="middle" fill="#10b981" font-size="10" font-weight="600">Think</text>
+              <circle cx="250" cy="150" r="20" fill="none" stroke="#10b981" stroke-width="1.5"/>
+              <text x="250" y="155" text-anchor="middle" fill="#10b981" font-size="10" font-weight="600">Own</text>
+            </svg>
+          </div>
+        </div>
       </div>
 
       <section class="about-section">
