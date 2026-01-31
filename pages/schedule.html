@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule a Working Session — LeBridge AI</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .schedule-container {
+      max-width: 480px;
+      margin: 64px auto;
+      padding: 0 24px;
+    }
+
+    .schedule-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .schedule-header h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .schedule-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .schedule-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 12px 14px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      background: #1a1f26;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-optional {
+      color: var(--text-tertiary);
+      font-size: 12px;
+    }
+
+    .schedule-submit {
+      margin-top: 12px;
+    }
+
+    .schedule-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 20px;
+    }
+
+    .schedule-footer {
+      margin-top: 60px;
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .schedule-footer p {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .schedule-footer a {
+      color: var(--color-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .schedule-footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .schedule-container {
+        margin: 48px auto;
+      }
+
+      .schedule-header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <a href="../index.html" class="nav-left">
+        <img
+          src="../assets/images/Logo Lebridge  logo plus icon white.png"
+          alt="LeBridge Logo"
+          class="logo"
+        />
+      </a>
+
+      <nav class="nav-links">
+        <a href="arkitek-os.html" class="arkitek-logo" aria-label="ArKiteK Studio">
+          <img
+            src="../assets/images/arkitek-logo.png"
+            alt="ArKiteK Studio"
+            class="arkitek-logo-img"
+          />
+        </a>
+      </nav>
+    </header>
+
+    <main class="schedule-container">
+      <div class="schedule-header">
+        <h1>Schedule a Working Session</h1>
+        <p>Let's design your AI system together.</p>
+      </div>
+
+      <form class="schedule-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Your name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="you@company.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="company">Company *</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            required
+            placeholder="Your company"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="needs">Tell us about your AI needs <span class="form-optional">(optional)</span></label>
+          <textarea
+            id="needs"
+            name="needs"
+            placeholder="What systems are you building? What decisions need governance?"
+          ></textarea>
+        </div>
+
+        <div class="schedule-submit">
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+            Schedule Session
+          </button>
+        </div>
+
+        <p class="schedule-note">
+          We'll follow up within 24 hours to find a time that works.
+        </p>
+      </form>
+
+      <div class="schedule-footer">
+        <p>Questions? Reach out directly:</p>
+        <a href="mailto:hello@lebridge.ai">hello@lebridge.ai</a>
+        <p style="margin-top: 16px; color: var(--text-tertiary); font-size: 13px;">
+          <a href="../index.html" style="color: var(--text-tertiary);">← Back to Home</a>
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4 class="footer-brand">LeBridge</h4>
+          <p>Operational systems for AI-driven organizations.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="arkitek-os.html">ArKiteK Studio</a></li>
+            <li><a href="../index.html">Home</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:hello@lebridge.ai">hello@lebridge.ai</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LeBridge AI. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
